@@ -9,9 +9,6 @@ var _formData$elements = formData.elements,
     htmlCss = _formData$elements.htmlCss,
     php = _formData$elements.php;
 
-// email.oninput = senderName.oninput = changeSubmitButtonState;
-// email.onfocus = senderName.onfocus = removeInvalidClass;
-// email.onblur = senderName.onblur  = addInvalidClasssIfNeeded;
 $('#email').keypress(changeSubmitButtonState);
 $('#senderName').keypress(changeSubmitButtonState);
 

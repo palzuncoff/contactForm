@@ -7,12 +7,6 @@ var _formData$elements = formData.elements,
     message = _formData$elements.message,
     butSendEmail = _formData$elements.butSendEmail;
 
-// email.oninput = sendersenderName.oninput = message.oninput = changeSubmitButtonState;
-// email.onfocus = senderName.onfocus = message.onfocus = removeInvalidClass;
-// email.onblur = senderName.onblur = message.onblur = addInvalidClasssIfNeeded;
-// email.onchange = senderName.onchange = message.onchange = addInvalidClasssIfNeeded;
-//Jquery
-
 $('#email').keypress(changeSubmitButtonState);
 $('#senderName').keypress(changeSubmitButtonState);
 $('#message').keypress(changeSubmitButtonState);
@@ -74,7 +68,6 @@ function addInvalidClasssIfNeeded(event) {
 function removeInvalidClass(event) {
   event.target.classList.remove("dirty");
 }
-
 
 function sendEmail() {
   var url = "/sender.php";
