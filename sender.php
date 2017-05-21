@@ -5,15 +5,15 @@ require 'PHPMailer/PHPMailerAutoload.php';
 $mail = new PHPMailer;
 
 $mail->isSMTP();
-$mail->Host = "mail.positronbohemia.com";
+$mail->Host = "smtp.host.com";
 $mail->SMTPAuth = true;
-$mail->Username = "office@positronbohemia.com";
-$mail->Password = '2GT151Ik';
+$mail->Username = "office@host.com";
+$mail->Password = 'pass';
 $mail->SMTPSecure = 'tls';
 $mail->Port = 587;
-$mail->setFrom("office@positronbohemia.com", 'PBBot');
+$mail->setFrom("office@host.com", 'PBBot');
 $mail->isHTML(true);
-$mail->addReplyTo("office@positronbohemia.com", 'Information');
+$mail->addReplyTo("office@host.com", 'Information');
 
 if ($_SERVER["CONTENT_TYPE"] ==  'application/json') {
   $postData = file_get_contents('php://input');
@@ -82,7 +82,7 @@ if ($_SERVER["CONTENT_TYPE"] ==  'application/json') {
 
 
 function send_mail($message){
-  $mail_to = "mihail.sitnic@gmail.com";
+  $mail_to = "one.of.as@gmail.com";
   $subject = "Письмо с обратной связи";
   $headers = "MIME-Version: 1.0\r\n";
   $headers .= "Content-type: text/html; charset=utf-8\r\n";
