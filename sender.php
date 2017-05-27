@@ -1,23 +1,24 @@
 <?php
 
 require 'PHPMailer/PHPMailerAutoload.php';
-require_once 'php.php';
-require_once 'html.php';
-require_once 'javascript.php';
-require_once 'introduction.php';
+require_once 'mail_templates/php.php';
+require_once 'mail_templates/html.php';
+require_once 'mail_templates/javascript.php';
+require_once 'mail_templates/introduction.php';
+require_once 'config.php';
 
 $mail = new PHPMailer;
 
 $mail->isSMTP();
-$mail->Host = "mail.host.com";
+$mail->Host = SMTP_HOST;
 $mail->SMTPAuth = true;
-$mail->Username = "office@host.com";
-$mail->Password = 'pass';
+$mail->Username = EMAIL_BOT;
+$mail->Password = PASSWORD;
 $mail->SMTPSecure = 'tls';
 $mail->Port = 587;
-$mail->setFrom("office@host.com", 'Positron Bohemia');
+$mail->setFrom(EMAIL_BOT, 'Positron Bohemia');
 $mail->isHTML(true);
-$mail->addReplyTo("office@host.com", 'Information');
+$mail->addReplyTo(EMAIL_BOT, 'Information');
 
 if ($_SERVER["CONTENT_TYPE"] ==  'application/json') {
   $postData = file_get_contents('php://input');
@@ -60,7 +61,7 @@ if ($_SERVER["CONTENT_TYPE"] ==  'application/json') {
         if ($data['HTMLCSS']) $course .= $html;
 // subscribe curses
         $mail->Body = $intro.
-        "<body leftmargin='0' marginwidth='0' topmargin='0' marginheight='0' offset='0' bgcolor='' class='background'>
+      "<body leftmargin='0' marginwidth='0' topmargin='0' marginheight='0' offset='0' bgcolor='' class='background'>
         <table align='center' border='0' cellpadding='0' cellspacing='0' height='100%' width='100%' class='background'>
           <tr>
             <td align='center' valign='top' width='100%' class='background'>
@@ -71,7 +72,7 @@ if ($_SERVER["CONTENT_TYPE"] ==  'application/json') {
                       <table cellpadding='0' cellspacing='0' class='force-full-width'>
                         <tr>
                          <td height='60' valign='top' class='header-cell'>
-                            <a class='logo' href='http://host.com/' target='_blank'>Positron Bohemia</a>
+                            <a class='logo' href='http://positronbohemia.com/' target='_blank'>Positron Bohemia</a>
                           </td>
                         </tr>
                         <tr>
@@ -99,7 +100,13 @@ if ($_SERVER["CONTENT_TYPE"] ==  'application/json') {
       } else {
         $mail->Subject = 'Thank you for contacting us.';
 // contact us
-        $mail->Body = "<body style='padding: 3em; margen: 3em; background: #4285f4;'><div style='padding: 3em; margen: 3em; background: #fff; box-shadow: 0 5px 10px rgba(0,0,0,.15);'><h1 style='margin: 0; font-size: 1.3em; color: #444; line-height: 2;'> Hello ". $senderName. "!<br> Thank you for your message on <a href='http://host.com/' target='_blank' style='color: #4285f4; text-decoration: none;'>Positron Bohemia</a><br> Hope you are having a great day so far!</h1><div></body>";
+        $mail->Body = "<body style='padding: 3em; margen: 3em; background: #4285f4;'>
+                        <div style='padding: 3em; margen: 3em; background: #fff; box-shadow: 0 5px 10px rgba(0,0,0,.15);'>
+                            <h1 style='margin: 0; font-size: 1.3em; color: #444; line-height: 2;'> Hello ". $senderName. "!<br>
+                              Thank you for your message on <a href='http://positronbohemia.com/' target='_blank' style='color: #4285f4; text-decoration: none;'>Positron Bohemia</a><br>
+                              Hope you are having a great day so far!</h1>
+                            <div>
+                       </body>";
 // end contact us
       }
 
@@ -127,12 +134,11 @@ if ($_SERVER["CONTENT_TYPE"] ==  'application/json') {
 
 
 function send_mail($message){
-  $mail_to = "exemple@gmail.com";
   $subject = "Письмо с обратной связи";
   $headers = "MIME-Version: 1.0\r\n";
   $headers .= "Content-type: text/html; charset=utf-8\r\n";
-  $headers .= "From: Письмо с host.com <no-reply@test.com>\r\n";
-  return mail($mail_to, $subject, $message, $headers);
+  $headers .= "From: Письмо с positronbohemia.com <no-reply@test.com>\r\n";
+  return mail(EMAIL_RECEIVER, $subject, $message, $headers);
 };
 
 function sanitizeString($var) {
