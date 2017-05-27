@@ -98,9 +98,12 @@ function sendEmail() {
   xhr.onreadystatechange = function() {
     if (xhr.readyState != 4) return;
     if (xhr.status != 200) {
-    document.getElementById("failed").className = "send-failed";
+      document.getElementById("failed").className = "send-failed";
     } else {
-    document.getElementById("successful").className = "send-successful";
+      document.getElementById("successful").className = "send-successful";
+      setTimeout(function() {
+        document.getElementById("successful").className = "blok";
+      }, 5000);
     }
   }
 
